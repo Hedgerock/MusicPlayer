@@ -13,3 +13,4 @@ This document records notable completed changes to MusicPlayer.
 - Project README and contributing guidelines.
 - Architecture decision defining feature organization and dependency boundaries.
 - Playlist name validation and trimming, with unit tests.
+- Playlist data model and repository contract.

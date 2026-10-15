@@ -5,16 +5,14 @@ describe('parsePlaylistName', () => {
     ['Дорога', 'Дорога'],
     ['  Дорога  ', 'Дорога'],
     ['  Моя  МуЗыКа  ', 'Моя  МуЗыКа'],
-  ])(
-    'given %p, when parsed, then the name is %p',
-    (input, expectedName) => {
-      const result = parsePlaylistName(input);
+  ])('given %p, when parsed, then the name is %p', (input, expectedName) => {
+    const result = parsePlaylistName(input);
 
-      expect(result).toEqual({
-        ok: true,
-        name: expectedName
-      });
-    })
+    expect(result).toEqual({
+      ok: true,
+      name: expectedName,
+    });
+  });
 
   test.each(['', '    ', '\t\n'])(
     'given blank input %p, when parsed, then it is rejected',
@@ -23,8 +21,8 @@ describe('parsePlaylistName', () => {
 
       expect(result).toEqual({
         ok: false,
-        error: 'EMPTY_NAME'
+        error: 'EMPTY_NAME',
       });
-    }
-  )
+    },
+  );
 });
