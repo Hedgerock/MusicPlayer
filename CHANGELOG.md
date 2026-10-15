@@ -12,3 +12,4 @@ This document records notable completed changes to MusicPlayer.
 - npm dependency lockfile.
 - Project README and contributing guidelines.
 - Architecture decision defining feature organization and dependency boundaries.
+- Playlist name validation and trimming, with unit tests.
