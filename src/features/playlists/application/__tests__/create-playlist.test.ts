@@ -70,6 +70,8 @@ describe('createPlaylist', () => {
       ok: false,
       error: 'CREATE_FAILED',
     });
+
+    expect(dependencies.repository.add).not.toHaveBeenCalled();
   });
 });
 

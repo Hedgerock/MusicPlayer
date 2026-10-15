@@ -15,3 +15,4 @@ This document records notable completed changes to MusicPlayer.
 - Playlist name validation and trimming, with unit tests.
 - Playlist data model and repository contract.
 - Playlist creation use case with injected dependencies and unit tests.
+- In-memory playlist repository and integration tests for playlist creation.
