@@ -75,6 +75,20 @@ Prefer real application modules. Replace dependencies at external boundaries whe
 Document which boundaries are replaced. A test using an in-memory repository verifies application cooperation; persistence
 requires a separate test against the real storage implementation.
 
+### Component tests
+
+Use React Native Testing Library for component tests.
+
+Query controls by accessible role and name. Query messages by visible text.
+
+Use `userEvent` for supported user interactions and await asynchronous operations.
+
+Use the library's matchers, such as `toBeOnTheScreen()` and `toBeEnabled()`.
+
+Replace native dependencies at explicit test boundaries.
+
+React Native Testing Library performs cleanup after each test.
+
 ### Android verification
 
 Verify native behavior on a device or emulator.

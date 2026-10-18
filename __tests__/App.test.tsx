@@ -1,6 +1,5 @@
+import { act, render, screen, userEvent } from '@testing-library/react-native';
 import React from 'react';
-import { Pressable, Text } from 'react-native';
-import ReactTestRenderer from 'react-test-renderer';
 
 import App from '../App';
 
@@ -16,18 +15,8 @@ jest.mock(
 );
 
 describe('application startup', () => {
-  let renderer: ReactTestRenderer.ReactTestRenderer;
-
   beforeEach(() => {
     mockGetAppDatabase.mockReset();
-  });
-
-  afterEach(async () => {
-    if (renderer) {
-      await ReactTestRenderer.act(() => {
-        renderer.unmount();
-      });
-    }
   });
 
   test('given pending initialization, when the application starts, then content appears only after storage is ready', async () => {
@@ -35,25 +24,24 @@ describe('application startup', () => {
 
     mockGetAppDatabase.mockReturnValue(initialization.promise);
 
-    await ReactTestRenderer.act(async () => {
-      renderer = ReactTestRenderer.create(<App />);
-    });
+    await render(<App />);
 
     expect(mockGetAppDatabase).toHaveBeenCalledTimes(1);
-    expect(readText()).toContain('Готовим приложение...');
-    expect(readText()).not.toContain('Проверка хранилища');
+    expect(screen.getByText('Готовим приложение...')).toBeOnTheScreen();
+    expect(screen.queryByText('Проверка хранилища')).not.toBeOnTheScreen();
 
-    await ReactTestRenderer.act(async () => {
+    await act(async () => {
       initialization.resolve();
 
       await initialization.promise;
     });
 
-    expect(readText()).not.toContain('Готовим приложение...');
-    expect(readText()).toContain('Проверка хранилища');
+    expect(screen.getByText('Проверка хранилища')).toBeOnTheScreen();
+    expect(screen.queryByText('Готовим приложение...')).not.toBeOnTheScreen();
   });
 
   test('given failed initialization, when the user retries successfully, then application content becomes available', async () => {
+    const user = userEvent.setup();
     const error = new Error('Native database could not be opened');
     const retry = createDeferred();
 
@@ -61,45 +49,45 @@ describe('application startup', () => {
       .mockRejectedValueOnce(error)
       .mockReturnValueOnce(retry.promise);
 
-    await ReactTestRenderer.act(async () => {
-      renderer = ReactTestRenderer.create(<App />);
+    await render(<App />);
+
+    expect(
+      screen.getByText(
+        'Не удалось подготовить приложение. Попробуйте ещё раз.',
+      ),
+    ).toBeOnTheScreen();
+    expect(screen.getByText('Повторить')).toBeOnTheScreen();
+    expect(screen.queryByText('Проверка хранилища')).not.toBeOnTheScreen();
+    expect(screen.queryByText(error.message)).not.toBeOnTheScreen();
+
+    const retryButton = screen.getByRole('button', {
+      name: 'Повторить',
     });
 
-    expect(readText()).toContain(
-      'Не удалось подготовить приложение. Попробуйте ещё раз.',
-    );
-    expect(readText()).toContain('Повторить');
-    expect(readText()).not.toContain('Проверка хранилища');
-    expect(readText()).not.toContain(error.message);
+    expect(retryButton).toBeEnabled();
 
-    await ReactTestRenderer.act(() => {
-      renderer.root
-        .find(
-          node =>
-            node.props.accessibilityRole === 'button' &&
-            typeof node.props.onPress === 'function',
-        )
-        .props.onPress();
-    });
+    await user.press(retryButton);
 
     expect(mockGetAppDatabase).toHaveBeenCalledTimes(2);
-    expect(readText()).toContain('Готовим приложение...');
 
-    expect(renderer.root.findAllByType(Pressable)).toHaveLength(0);
+    expect(screen.getByText('Готовим приложение...')).toBeOnTheScreen();
+    expect(
+      screen.queryByRole('button', { name: 'Повторить' }),
+    ).not.toBeOnTheScreen();
+    expect(screen.queryByText('Проверка хранилища')).not.toBeOnTheScreen();
 
-    await ReactTestRenderer.act(async () => {
+    await act(async () => {
       retry.resolve();
 
       await retry.promise;
     });
 
-    expect(readText()).toContain('Проверка хранилища');
-    expect(readText()).not.toContain('Повторить');
+    expect(screen.getByText('Проверка хранилища')).toBeOnTheScreen();
+    expect(screen.queryByText('Готовим приложение...')).not.toBeOnTheScreen();
+    expect(
+      screen.queryByRole('button', { name: 'Повторить' }),
+    ).not.toBeOnTheScreen();
   });
-
-  function readText() {
-    return renderer.root.findAllByType(Text).map(node => node.props.children);
-  }
 });
 
 function createDeferred() {
