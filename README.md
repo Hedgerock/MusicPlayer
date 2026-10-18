@@ -10,8 +10,11 @@ limited experience with technology.
 The project includes playlist domain rules, a playlist creation use case, and an in-memory repository with unit and
 integration tests.
 
-OP-SQLite is integrated, and native storage persistence has been verified on Android. Production database migrations and
-the SQLite playlist repository are the next implementation steps.
+OP-SQLite is integrated, and native storage persistence has been verified on Android. The initial playlist schema and migration
+runner have automated SQLite integration tests.
+
+Connecting storage initialization to the Android application and implementing the SQLite playlist repository are the next
+steps.
 
 Music playback and the user-facing application screens remain planned.
 
