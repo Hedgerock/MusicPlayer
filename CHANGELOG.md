@@ -18,3 +18,4 @@ This document records notable completed changes to MusicPlayer.
 - In-memory playlist repository and integration tests for playlist creation.
 - OP-SQLite 18.2.5 dependency for local database integration.
 - SQLite diagnostics for Android development builds.
+- ADR writing guidelines and an architecture decision index.

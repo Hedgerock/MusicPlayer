@@ -122,9 +122,13 @@ A specification records:
 
 Architecture decisions belong in `docs/adr/`.
 
-Each ADR records its status, context, decision, consequences, and considered alternatives.
+New ADRs follow the [ADR writing guidelines](docs/rules/adr-guidelines.md).
 
-When a decision is superseded, create a new ADR and link both records.
+Each ADR records its status, context, decision, consequences, scope exclusions, and related decisions. Considered alternatives
+and sources are included when relevant.
+
+Accepted ADRs preserve their historical context and reasoning. Changes to an architectural decision require a new ADR.
+Superseded decisions and their replacements link to each other.
 
 CHANGELOG entries describe completed changes in behavior or project capabilities. Planned work belongs in feature
 specifications.
