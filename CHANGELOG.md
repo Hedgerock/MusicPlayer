@@ -24,3 +24,4 @@ This document records notable completed changes to MusicPlayer.
 - Initial playlist schema migration definition with SQLite integration tests.
 - Versioned SQLite migration runner with per-migration transactions and unit and integration tests.
 - Source alias configuration, automated import sorting, import lint rules, and formatting scripts.
+- Application database initialization with migration readiness checks and connection cleanup on failure.
