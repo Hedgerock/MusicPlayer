@@ -6,7 +6,7 @@
  */
 
 import { NewAppScreen } from '@react-native/new-app-screen';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Pressable,
@@ -21,6 +21,7 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
+import { getAppDatabase } from '@/app/storage/get-app-database';
 import { checkSqliteStorage } from '@/features/playlists/infrastructure/check-sqlite-storage';
 
 import ScrollView = Animated.ScrollView;
@@ -28,12 +29,52 @@ import ScrollView = Animated.ScrollView;
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(
+    'loading',
+  );
+
+  const [attempt, setAttempt] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+
+    getAppDatabase().then(
+      () => {
+        if (active) {
+          setStatus('ready');
+        }
+      },
+      () => {
+        if (active) {
+          setStatus('error');
+        }
+      },
+    );
+
+    return () => {
+      active = false;
+    };
+  }, [attempt]);
+
+  function retryInitialization() {
+    setStatus('loading');
+    setAttempt(value => value + 1);
+  }
+
   return (
     <SafeAreaProvider>
       <StatusBar
-        barStyle={__DEV__ || !isDarkMode ? 'dark-content' : 'light-content'}
+        barStyle={
+          __DEV__ || status !== 'ready' || !isDarkMode
+            ? 'dark-content'
+            : 'light-content'
+        }
       />
-      <AppContent />
+      {status === 'ready' ? (
+        <AppContent />
+      ) : (
+        <AppStartup status={status} onRetry={retryInitialization} />
+      )}
     </SafeAreaProvider>
   );
 }
@@ -118,6 +159,55 @@ function AppContent() {
         templateFileName="App.tsx"
         safeAreaInsets={safeAreaInsets}
       />
+    </View>
+  );
+}
+
+function AppStartup({
+  status,
+  onRetry,
+}: {
+  status: 'loading' | 'error';
+  onRetry: () => void;
+}) {
+  const safeAreaInsets = useSafeAreaInsets();
+
+  return (
+    <View
+      style={[
+        styles.container,
+        styles.diagnosticScreen,
+        {
+          paddingTop: safeAreaInsets.top,
+          paddingBottom: safeAreaInsets.bottom,
+        },
+      ]}
+    >
+      <ScrollView contentContainerStyle={styles.diagnosticContent}>
+        <Text accessibilityRole="header" style={styles.diagnosticTitle}>
+          Запуск приложения
+        </Text>
+
+        <Text
+          accessibilityLiveRegion="polite"
+          accessibilityState={{ busy: status === 'loading' }}
+          style={styles.diagnosticText}
+        >
+          {status === 'loading'
+            ? 'Готовим приложение...'
+            : 'Не удалось подготовить приложение. Попробуйте ещё раз.'}
+        </Text>
+
+        {status === 'error' && (
+          <Pressable
+            accessibilityRole="button"
+            onPress={onRetry}
+            style={styles.diagnosticButton}
+          >
+            <Text style={styles.diagnosticButtonText}>Повторить</Text>
+          </Pressable>
+        )}
+      </ScrollView>
     </View>
   );
 }

@@ -13,8 +13,10 @@ integration tests.
 OP-SQLite is integrated, and native storage persistence has been verified on Android. The initial playlist schema and migration
 runner have automated SQLite integration tests.
 
-Connecting storage initialization to the Android application and implementing the SQLite playlist repository are the next
-steps.
+Application startup initializes the working SQLite database before showing application content. Failed initialization can
+be retried from the startup screen.
+
+Implementing the SQLite playlist repository is the next step.
 
 Music playback and the user-facing application screens remain planned.
 

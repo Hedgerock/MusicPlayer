@@ -26,3 +26,4 @@ This document records notable completed changes to MusicPlayer.
 - Source alias configuration, automated import sorting, import lint rules, and formatting scripts.
 - Application database initialization with migration readiness checks and connection cleanup on failure.
 - GitHub Actions workflow for formatting, linting, TypeScript checks, and unit and integration tests.
+- Native database initialization on application startup, with shared connection loading and retry support.
