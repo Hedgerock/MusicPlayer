@@ -1,0 +1,46 @@
+<style>
+root {
+    FontName SansSerif
+    FontSize 16
+    FontColor #20242A
+    lineColor #59636E
+    Shadowing 0
+}
+
+document {
+    BackgroundColor #F3F4F6
+
+    title {
+        FontColor #20242A
+        FontSize 18
+    }
+
+    legend {
+        BackgroundColor #FFFFFF
+        FontColor #20242A
+        FontSize 16
+        LineColor #59636E
+        RoundCorner 0
+    }
+}
+
+classDiagram {
+    class {
+        BackgroundColor #FFFFFF
+        FontColor #20242A
+        FontSize 16
+        LineColor #59636E
+    }
+
+    arrow {
+        LineColor #59636E
+    }
+}
+
+note {
+    BackgroundColor #F3F4F6
+    FontColor #20242A
+    FontSize 16
+    LineColor #59636E
+}
+</style>

@@ -19,3 +19,5 @@ This document records notable completed changes to MusicPlayer.
 - OP-SQLite 18.2.5 dependency for local database integration.
 - SQLite diagnostics for Android development builds.
 - ADR writing guidelines and an architecture decision index.
+- Architecture decision defining the playlist storage schema and migration rules.
+- Playlist database relationship diagram and diagram writing guidelines.

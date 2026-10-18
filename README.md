@@ -7,10 +7,13 @@ limited experience with technology.
 
 ## Project status
 
-The project currently contains the initial React Native scaffold.
+The project includes playlist domain rules, a playlist creation use case, and an in-memory repository with unit and
+integration tests.
 
-Music playback, playlists, playback history, and the application interface are planned features. iOS support is a possible
-future extension.
+OP-SQLite is integrated, and native storage persistence has been verified on Android. Production database migrations and
+the SQLite playlist repository are the next implementation steps.
+
+Music playback and the user-facing application screens remain planned.
 
 ## Planned features
 

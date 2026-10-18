@@ -1,0 +1,41 @@
+@startuml
+!include ../styles/database.puml
+
+title Хранение плейлистов — версия схемы 1
+
+left to right direction
+hide circle
+
+skinparam linetype ortho
+
+entity "playlists" as playlists {
+    * id : TEXT <<PK>>
+    --
+    * name : TEXT
+}
+
+entity "playlist_tracks" as playlist_tracks {
+    * playlist_id : TEXT <<PK, FK>>
+    * position : INTEGER <<PK>>
+    --
+    * track_id : TEXT
+}
+
+playlists ||--o{ playlist_tracks
+
+note bottom of playlist_tracks
+    PRIMARY KEY (playlist_id, position)
+    CHECK (position >= 0)
+    ON DELETE CASCADE для playlist_id
+end note
+
+legend left
+    * — обязательное поле, NOT NULL
+    PK — первичный ключ
+    FK — внешний ключ
+
+Один плейлист содержит 0..N записей.
+Каждая запись относится к одному плейлисту.
+endlegend
+
+@enduml

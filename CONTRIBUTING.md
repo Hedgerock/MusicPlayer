@@ -47,7 +47,7 @@ Example:
 ```text
 Given an empty playlist
 When the user adds a track
-The playlist contains that track at position zero
+Then the playlist contains that track at position zero
 ```
 
 Use explicit behavior-oriented test names:
@@ -129,6 +129,10 @@ and sources are included when relevant.
 
 Accepted ADRs preserve their historical context and reasoning. Changes to an architectural decision require a new ADR.
 Superseded decisions and their replacements link to each other.
+
+Diagrams follow the [diagram guidelines](docs/rules/diagram-guidelines.md).
+
+Database diagrams describe a specific schema version and are maintained alongside the corresponding migrations.
 
 CHANGELOG entries describe completed changes in behavior or project capabilities. Planned work belongs in feature
 specifications.
