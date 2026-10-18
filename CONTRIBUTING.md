@@ -190,6 +190,9 @@ npm run lint
 npx tsc --noEmit
 ```
 
+The same checks run in GitHub Actions on pushes to `main` and pull requests targeting `main`. Review the `Quality checks`
+job before merging a pull request.
+
 Run the relevant Android build and device checks when native configuration or platform behavior changes.
 
 ## Definition of done

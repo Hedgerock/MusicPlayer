@@ -108,6 +108,17 @@ npx tsc --noEmit
 JavaScript tests are used to verify application logic and component interactions. Native integrations and background playback
 also require checks on Android.
 
+## Continuous integration
+
+GitHub Actions runs formatting, ESLint, TypeScript, and Jest checks on pushes to `main` and pull requests targeting `main`.
+The workflow can also be started manually.
+
+Checks run on Ubuntu 24.04 with Node.js 22.18.0. SQLite integration tests use `node:sqlite`.
+
+Android builds and device verification are performed separately.
+
+See the [CI workflow](.github/workflows/ci.yml).
+
 ## Architecture
 
 The project follows a simplified Clean Architecture, organized by feature.
