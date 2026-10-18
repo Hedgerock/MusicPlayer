@@ -1,14 +1,14 @@
 /**
  * @jest-environment node
  */
-
 import { DatabaseSync } from 'node:sqlite';
-import {
-  migrateDatabase,
-  type Migration,
-  type MigrationDatabase,
-} from '../migrate-database.ts';
-import { appMigrations } from '../../../../app/storage/migrations.ts';
+
+import { appMigrations } from '@/app/storage/migrations';
+import { migrateDatabase } from '@/shared/infrastructure/sqlite/migrate-database';
+import type {
+  Migration,
+  MigrationDatabase,
+} from '@/shared/infrastructure/sqlite/migrate-database';
 
 describe('database migrations (SQLite integration)', () => {
   let sqlite: DatabaseSync;

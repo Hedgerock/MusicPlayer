@@ -1,0 +1,8 @@
+node_modules/
+android/
+ios/
+coverage/
+vendor/
+package-lock.json
+**/*.puml
+**/*.svg

@@ -1,11 +1,22 @@
+const path = require('node:path');
+
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 
-/**
- * Metro configuration
- * https://reactnative.dev/docs/metro
- *
- * @type {import('@react-native/metro-config').MetroConfig}
- */
-const config = {};
+const defaultConfig = getDefaultConfig(__dirname);
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+const config = {
+  resolver: {
+    resolveRequest(context, moduleName, platform) {
+      const modulePath = moduleName.startsWith('@/')
+        ? path.resolve(__dirname, 'src', moduleName.slice(2))
+        : moduleName;
+
+      const resolve =
+        defaultConfig.resolver.resolveRequest ?? context.resolveRequest;
+
+      return resolve(context, modulePath, platform);
+    },
+  },
+};
+
+module.exports = mergeConfig(defaultConfig, config);

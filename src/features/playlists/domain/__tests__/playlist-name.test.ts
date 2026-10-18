@@ -1,4 +1,4 @@
-import { parsePlaylistName } from '../playlist-name.ts';
+import { parsePlaylistName } from '@/features/playlists/domain/playlist-name';
 
 describe('parsePlaylistName', () => {
   test.each([

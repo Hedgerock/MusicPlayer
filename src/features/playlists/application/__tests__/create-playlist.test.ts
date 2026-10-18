@@ -1,7 +1,7 @@
-import type { PlaylistRepository } from '../ports/playlist-repository.ts';
-import type { PlaylistIdGenerator } from '../ports/playlist-id-generator.ts';
-import type { Playlist } from '../../domain/playlist.ts';
-import { createPlaylist } from '../create-playlist.ts';
+import { createPlaylist } from '@/features/playlists/application/create-playlist';
+import type { PlaylistIdGenerator } from '@/features/playlists/application/ports/playlist-id-generator';
+import type { PlaylistRepository } from '@/features/playlists/application/ports/playlist-repository';
+import type { Playlist } from '@/features/playlists/domain/playlist';
 
 describe('createPlaylist', () => {
   test('given a valid name, when creating, then an empty playlist is saved', async () => {

@@ -6,6 +6,7 @@
  */
 
 import { NewAppScreen } from '@react-native/new-app-screen';
+import { useRef, useState } from 'react';
 import {
   Animated,
   Pressable,
@@ -19,8 +20,9 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { useRef, useState } from 'react';
-import { checkSqliteStorage } from './src/features/playlists/infrastructure/check-sqlite-storage.ts';
+
+import { checkSqliteStorage } from '@/features/playlists/infrastructure/check-sqlite-storage';
+
 import ScrollView = Animated.ScrollView;
 
 function App() {

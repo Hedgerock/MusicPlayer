@@ -1,7 +1,5 @@
-import {
-  migrateDatabase,
-  type MigrationDatabase,
-} from '../migrate-database.ts';
+import { migrateDatabase } from '@/shared/infrastructure/sqlite/migrate-database';
+import type { MigrationDatabase } from '@/shared/infrastructure/sqlite/migrate-database';
 
 describe('migrateDatabase', () => {
   test.each([

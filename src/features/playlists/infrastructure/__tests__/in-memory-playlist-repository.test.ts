@@ -1,4 +1,4 @@
-import { createInMemoryPlaylistRepository } from '../in-memory-playlist-repository.ts';
+import { createInMemoryPlaylistRepository } from '@/features/playlists/infrastructure/in-memory-playlist-repository';
 
 describe('in-memory playlist repository', () => {
   test('given mutable input, when it changes after adding, then stored data stays unchanged', async () => {

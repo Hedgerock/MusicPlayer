@@ -1,7 +1,7 @@
-import type { PlaylistRepository } from './ports/playlist-repository.ts';
-import type { PlaylistIdGenerator } from './ports/playlist-id-generator.ts';
-import type { Playlist } from '../domain/playlist.ts';
-import { parsePlaylistName } from '../domain/playlist-name.ts';
+import type { PlaylistIdGenerator } from '@/features/playlists/application/ports/playlist-id-generator';
+import type { PlaylistRepository } from '@/features/playlists/application/ports/playlist-repository';
+import type { Playlist } from '@/features/playlists/domain/playlist';
+import { parsePlaylistName } from '@/features/playlists/domain/playlist-name';
 
 export type CreatePlaylistDependencies = {
   readonly repository: PlaylistRepository;

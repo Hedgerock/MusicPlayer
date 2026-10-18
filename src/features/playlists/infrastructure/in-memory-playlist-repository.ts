@@ -1,5 +1,5 @@
-import type { PlaylistRepository } from '../application/ports/playlist-repository.ts';
-import type { Playlist } from '../domain/playlist.ts';
+import type { PlaylistRepository } from '@/features/playlists/application/ports/playlist-repository';
+import type { Playlist } from '@/features/playlists/domain/playlist';
 
 export function createInMemoryPlaylistRepository(): PlaylistRepository {
   const playlists = new Map<string, Playlist>();

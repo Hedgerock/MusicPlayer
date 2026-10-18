@@ -134,6 +134,13 @@ Diagrams follow the [diagram guidelines](docs/rules/diagram-guidelines.md).
 
 Database diagrams describe a specific schema version and are maintained alongside the corresponding migrations.
 
+Source imports follow the [import guidelines](docs/rules/import-guidelines.md).
+
+Run `npm run format` to apply formatting and `npm run format:check` to verify it.
+
+Prettier sorts imports using the configured import sorting plugin. ESLint checks paths and type-import conventions.
+Run `npm run lint:fix` to apply available automatic fixes.
+
 CHANGELOG entries describe completed changes in behavior or project capabilities. Planned work belongs in feature
 specifications.
 
@@ -177,6 +184,7 @@ related documentation.
 Run from the project root:
 
 ```powershell
+npm run format:check
 npm test -- --runInBand
 npm run lint
 npx tsc --noEmit

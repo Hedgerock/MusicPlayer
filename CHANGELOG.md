@@ -23,3 +23,4 @@ This document records notable completed changes to MusicPlayer.
 - Playlist database relationship diagram and diagram writing guidelines.
 - Initial playlist schema migration definition with SQLite integration tests.
 - Versioned SQLite migration runner with per-migration transactions and unit and integration tests.
+- Source alias configuration, automated import sorting, import lint rules, and formatting scripts.

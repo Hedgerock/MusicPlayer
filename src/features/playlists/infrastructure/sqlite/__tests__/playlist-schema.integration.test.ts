@@ -3,7 +3,8 @@
  */
 
 import { DatabaseSync } from 'node:sqlite';
-import { createPlaylistsMigration } from '../migrations/0001-create-playlists.ts';
+
+import { createPlaylistsMigration } from '@/features/playlists/infrastructure/sqlite/migrations/0001-create-playlists';
 
 describe('playlist schema (SQLite integration)', () => {
   let database: DatabaseSync;
@@ -134,9 +135,7 @@ describe('playlist schema (SQLite integration)', () => {
     database.prepare(`DELETE FROM playlists WHERE id = ?`).run('playlist-1');
 
     expect(database.prepare(`SELECT * FROM playlists`).all()).toEqual([]);
-    expect(database.prepare(`SELECT * FROM playlist_tracks`).all()).toEqual(
-      [],
-    );
+    expect(database.prepare(`SELECT * FROM playlist_tracks`).all()).toEqual([]);
   });
 
   function insertPlaylist(id: string, name = 'Дорога') {

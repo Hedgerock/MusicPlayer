@@ -99,6 +99,7 @@ npm run android
 Run from the project root:
 
 ```powershell
+npm run format:check
 npm test -- --runInBand
 npm run lint
 npx tsc --noEmit
