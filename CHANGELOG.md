@@ -21,3 +21,4 @@ This document records notable completed changes to MusicPlayer.
 - ADR writing guidelines and an architecture decision index.
 - Architecture decision defining the playlist storage schema and migration rules.
 - Playlist database relationship diagram and diagram writing guidelines.
+- Initial playlist schema migration definition with SQLite integration tests.
