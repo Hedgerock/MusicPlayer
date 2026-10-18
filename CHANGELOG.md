@@ -17,3 +17,4 @@ This document records notable completed changes to MusicPlayer.
 - Playlist creation use case with injected dependencies and unit tests.
 - In-memory playlist repository and integration tests for playlist creation.
 - OP-SQLite 18.2.5 dependency for local database integration.
+- SQLite diagnostics for Android development builds.
