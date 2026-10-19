@@ -150,6 +150,8 @@ Database diagrams describe a specific schema version and are maintained alongsid
 
 Source imports follow the [import guidelines](docs/rules/import-guidelines.md).
 
+React components, hooks, state ownership, memoization, and effects follow the [React presentation guidelines](docs/rules/react-presentation-guidelines.md).
+
 Run `npm run format` to apply formatting and `npm run format:check` to verify it.
 
 Prettier sorts imports using the configured import sorting plugin. ESLint checks paths and type-import conventions.

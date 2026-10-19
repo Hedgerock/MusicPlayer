@@ -27,6 +27,8 @@ This document records notable completed changes to MusicPlayer.
 - Application database initialization with migration readiness checks and connection cleanup on failure.
 - GitHub Actions workflow for formatting, linting, TypeScript checks, and unit and integration tests.
 - Native database initialization on application startup, with shared connection loading and retry support.
+- Architecture decision defining UI state ownership and shared state management.
+- React presentation guidelines for components, hooks, memoization, and effects.
 
 ### Changed
 
