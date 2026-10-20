@@ -23,9 +23,12 @@ A playlist composition factory prepares creation and read operations from an ini
 
 The playlist creation form has component tests for pending saves, validation messages, retry, and successful creation.
 
-Connecting the factory and form to application startup and the playlist screen is the next step.
+The playlist screen combines loading, empty, and retry states with the creation form. Component tests cover screen behavior,
+including an integration scenario using the creation use case and in-memory repository.
 
-Music playback and the user-facing application screens remain planned.
+Connecting the playlist services and screen to native application startup is the next step.
+
+Music playback remains planned.
 
 ## Planned features
 

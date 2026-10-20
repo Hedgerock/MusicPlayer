@@ -6,13 +6,10 @@ import { DatabaseSync } from 'node:sqlite';
 import { appMigrations } from '@/app/storage/migrations';
 import { createPlaylist } from '@/features/playlists/application/create-playlist';
 import { createSQLitePlaylistRepository } from '@/features/playlists/infrastructure/sqlite/sqlite-playlist-repository';
+import { createPlaylistTestDatabase } from '@/features/playlists/infrastructure/sqlite/testing/create-playlist-test-database';
 import { migrateDatabase } from '@/shared/infrastructure/sqlite/migrate-database';
 import type { PlaylistRepository } from '@/features/playlists/application/ports/playlist-repository';
 import type { Playlist } from '@/features/playlists/domain/playlist';
-import type {
-  PlaylistDatabase,
-  PlaylistSqlExecutor,
-} from '@/features/playlists/infrastructure/sqlite/sqlite-playlist-repository';
 
 describe('SQLite playlist repository (integration)', () => {
   let sqlite: DatabaseSync;
@@ -23,7 +20,7 @@ describe('SQLite playlist repository (integration)', () => {
       enableForeignKeyConstraints: false,
     });
 
-    const database = createDatabase(sqlite);
+    const database = createPlaylistTestDatabase(sqlite);
 
     await migrateDatabase(database, appMigrations);
 
@@ -203,27 +200,3 @@ describe('SQLite playlist repository (integration)', () => {
     ]);
   });
 });
-
-function createDatabase(
-  sqlite: DatabaseSync,
-): PlaylistDatabase & PlaylistSqlExecutor {
-  const execute: PlaylistSqlExecutor['execute'] = async (sql, params = []) => ({
-    rows: sqlite.prepare(sql).all(...params),
-  });
-
-  return {
-    execute,
-
-    async transaction(work) {
-      sqlite.exec('BEGIN');
-
-      try {
-        await work({ execute });
-        sqlite.exec('COMMIT');
-      } catch (error) {
-        sqlite.exec('ROLLBACK');
-        throw error;
-      }
-    },
-  };
-}

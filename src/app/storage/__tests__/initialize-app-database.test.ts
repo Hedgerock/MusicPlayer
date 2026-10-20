@@ -1,6 +1,7 @@
 import { initializeAppDatabase } from '@/app/storage/initialize-app-database';
 import { appMigrations } from '@/app/storage/migrations';
 import { migrateDatabase } from '@/shared/infrastructure/sqlite/migrate-database';
+import { createDeferred } from '@/shared/testing/create-deferred';
 import type { AppDatabase } from '@/app/storage/initialize-app-database';
 
 jest.mock('@/shared/infrastructure/sqlite/migrate-database', () => ({
@@ -106,18 +107,5 @@ function createDatabase(): jest.Mocked<AppDatabase> {
     execute: jest.fn(),
     transaction: jest.fn(),
     close: jest.fn(),
-  };
-}
-
-function createDeferred() {
-  let complete!: () => void;
-
-  const promise = new Promise<void>(resolve => {
-    complete = resolve;
-  });
-
-  return {
-    promise,
-    resolve: complete,
   };
 }

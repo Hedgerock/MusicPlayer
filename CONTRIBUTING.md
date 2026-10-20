@@ -58,6 +58,20 @@ given an empty playlist, when a track is added, then it becomes the first item
 
 Tests must be independent and contain explicit assertions.
 
+### Test helpers and fixtures
+
+Keep scenario-specific setup close to its tests.
+
+Place reusable, feature-independent test utilities in `src/shared/testing`.
+
+Place feature-specific helpers in a `testing` directory next to the relevant implementation.
+
+Keep Node-specific helpers separate from React Native component testing helpers.
+
+Create fresh mocks and mutable fixtures for each test.
+
+Keep meaningful inputs, user actions, and assertions visible in the test body.
+
 ### Unit tests
 
 Each behavior-changing feature includes unit tests for its business rules and application logic.
@@ -88,6 +102,28 @@ Use the library's matchers, such as `toBeOnTheScreen()` and `toBeEnabled()`.
 Replace native dependencies at explicit test boundaries.
 
 React Native Testing Library performs cleanup after each test.
+
+### Visual regression tests
+
+Add screenshot tests for stable screens after they are integrated into the native application.
+
+These tests compare images of the rendered native interface.
+
+Prioritize important screen states, long names, large system fonts, and narrow screens. Add theme coverage when the
+corresponding themes are implemented.
+
+Each test profile fixes the Android version, emulator configuration, screen resolution and density, font scale, locale, and
+theme.
+
+Use deterministic fixtures and capture images after loading and animations have completed.
+
+Review baseline changes manually and explain the expected visual change.
+
+Jest component tree snapshots do not count as screenshot tests.
+
+Screenshot tests complement behavior tests and accessibility checks. They do not verify TalkBack behavior or focus order.
+
+Select the tooling when the first screenshot testing scenario is introduced.
 
 ### Android verification
 

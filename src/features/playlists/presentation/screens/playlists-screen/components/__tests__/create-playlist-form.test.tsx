@@ -1,6 +1,7 @@
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 import { CreatePlaylistForm } from '@/features/playlists/presentation/screens/playlists-screen/components/create-playlist-form';
+import { createDeferred } from '@/shared/testing/create-deferred';
 import type { CreatePlaylistResult } from '@/features/playlists/application/create-playlist';
 
 describe('playlist creation form', () => {
@@ -170,16 +171,3 @@ describe('playlist creation form', () => {
     expect(screen.queryByText('Native storage details')).not.toBeOnTheScreen();
   });
 });
-
-function createDeferred<T>() {
-  let resolvePromise!: (value: T) => void;
-
-  const promise = new Promise<T>(resolve => {
-    resolvePromise = resolve;
-  });
-
-  return {
-    promise,
-    resolve: resolvePromise,
-  };
-}

@@ -8,6 +8,8 @@ module.exports = {
   extends: '@react-native',
 
   rules: {
+    'no-void': ['error', { allowAsStatement: true }],
+
     'no-restricted-imports': [
       'error',
       {

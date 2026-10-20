@@ -5,6 +5,7 @@ import { DatabaseSync } from 'node:sqlite';
 
 import { createPlaylistServices } from '@/app/playlists/create-playlist-services';
 import { appMigrations } from '@/app/storage/migrations';
+import { createPlaylistTestDatabase } from '@/features/playlists/infrastructure/sqlite/testing/create-playlist-test-database';
 import { migrateDatabase } from '@/shared/infrastructure/sqlite/migrate-database';
 import type {
   PlaylistDatabase,
@@ -20,7 +21,7 @@ describe('playlist services (SQLite integration)', () => {
       enableForeignKeyConstraints: false,
     });
 
-    database = createDatabase(sqlite);
+    database = createPlaylistTestDatabase(sqlite);
 
     await migrateDatabase(database, appMigrations);
   });
@@ -95,27 +96,3 @@ describe('playlist services (SQLite integration)', () => {
     expect(await services.getPlaylists()).toEqual([original]);
   });
 });
-
-function createDatabase(
-  sqlite: DatabaseSync,
-): PlaylistDatabase & PlaylistSqlExecutor {
-  const execute: PlaylistSqlExecutor['execute'] = async (sql, params = []) => ({
-    rows: sqlite.prepare(sql).all(...params),
-  });
-
-  return {
-    execute,
-
-    async transaction(work) {
-      sqlite.exec('BEGIN');
-
-      try {
-        await work({ execute });
-        sqlite.exec('COMMIT');
-      } catch (error) {
-        sqlite.exec('ROLLBACK');
-        throw error;
-      }
-    },
-  };
-}

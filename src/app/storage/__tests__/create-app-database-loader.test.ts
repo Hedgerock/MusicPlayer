@@ -1,5 +1,6 @@
 import { createAppDatabaseLoader } from '@/app/storage/create-app-database-loader';
 import { initializeAppDatabase } from '@/app/storage/initialize-app-database';
+import { createDeferred } from '@/shared/testing/create-deferred';
 import type {
   AppDatabase,
   OpenAppDatabase,
@@ -92,16 +93,3 @@ describe('createAppDatabaseLoader', () => {
     expect(mockedInitializeAppDatabase).toHaveBeenCalledTimes(2);
   });
 });
-
-function createDeferred<T>() {
-  let resolvePromise!: (value: T) => void;
-
-  const promise = new Promise<T>(resolve => {
-    resolvePromise = resolve;
-  });
-
-  return {
-    promise,
-    resolve: resolvePromise,
-  };
-}

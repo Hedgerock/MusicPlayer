@@ -1,6 +1,8 @@
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 import React from 'react';
 
+import { createDeferred } from '@/shared/testing/create-deferred';
+
 import App from '../App';
 
 const mockGetAppDatabase = jest.fn<Promise<unknown>, []>();
@@ -89,16 +91,3 @@ describe('application startup', () => {
     ).not.toBeOnTheScreen();
   });
 });
-
-function createDeferred() {
-  let complete!: () => void;
-
-  const promise = new Promise<void>(resolve => {
-    complete = resolve;
-  });
-
-  return {
-    promise,
-    resolve: complete,
-  };
-}
