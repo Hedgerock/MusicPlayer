@@ -154,8 +154,10 @@ React components, hooks, state ownership, memoization, and effects follow the [R
 
 Run `npm run format` to apply formatting and `npm run format:check` to verify it.
 
-Prettier sorts imports using the configured import sorting plugin. ESLint checks paths and type-import conventions.
-Run `npm run lint:fix` to apply available automatic fixes.
+Prettier sorts imports using the configured import sorting plugin. Within each import group, value imports precede separate
+type imports. Paths are sorted independently within these subgroups.
+
+ESLint checks paths and type-import conventions.
 
 CHANGELOG entries describe completed changes in behavior or project capabilities. Planned work belongs in feature
 specifications.
@@ -205,6 +207,8 @@ npm test -- --runInBand
 npm run lint
 npx tsc --noEmit
 ```
+
+Run `npm run before-commit` to apply formatting and execute all required checks.
 
 The same checks run in GitHub Actions on pushes to `main` and pull requests targeting `main`. Review the `Quality checks`
 job before merging a pull request.

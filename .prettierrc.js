@@ -10,13 +10,17 @@ module.exports = {
 
   importOrder: [
     '<BUILTIN_MODULES>',
+    '<TYPES>^node:',
     '',
     '<THIRD_PARTY_MODULES>',
+    '<TYPES>',
     '',
     '^@/',
+    '<TYPES>^@/',
     '',
     '^[.]',
+    '<TYPES>^[.]',
   ],
 
-  importOrderTypeScriptVersion: '4.4.0',
+  importOrderTypeScriptVersion: '6.0.3',
 };

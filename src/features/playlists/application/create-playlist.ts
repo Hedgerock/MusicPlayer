@@ -1,7 +1,7 @@
+import { parsePlaylistName } from '@/features/playlists/domain/playlist-name';
 import type { PlaylistIdGenerator } from '@/features/playlists/application/ports/playlist-id-generator';
 import type { PlaylistRepository } from '@/features/playlists/application/ports/playlist-repository';
 import type { Playlist } from '@/features/playlists/domain/playlist';
-import { parsePlaylistName } from '@/features/playlists/domain/playlist-name';
 
 export type CreatePlaylistDependencies = {
   readonly repository: PlaylistRepository;

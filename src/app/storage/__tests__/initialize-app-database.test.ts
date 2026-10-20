@@ -1,7 +1,7 @@
 import { initializeAppDatabase } from '@/app/storage/initialize-app-database';
-import type { AppDatabase } from '@/app/storage/initialize-app-database';
 import { appMigrations } from '@/app/storage/migrations';
 import { migrateDatabase } from '@/shared/infrastructure/sqlite/migrate-database';
+import type { AppDatabase } from '@/app/storage/initialize-app-database';
 
 jest.mock('@/shared/infrastructure/sqlite/migrate-database', () => ({
   migrateDatabase: jest.fn(),

@@ -12,7 +12,8 @@
     "android:start": "npm run android -- --active-arch-only",
     "test": "jest",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "before-commit": "npm run format && npm run format:check && npm run lint && npx tsc --noEmit && npm test -- --runInBand"
   },
   "dependencies": {
     "@op-engineering/op-sqlite": "18.2.5",

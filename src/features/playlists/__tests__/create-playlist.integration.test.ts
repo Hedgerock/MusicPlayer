@@ -1,6 +1,6 @@
 import { createPlaylist } from '@/features/playlists/application/create-playlist';
-import type { PlaylistIdGenerator } from '@/features/playlists/application/ports/playlist-id-generator';
 import { createInMemoryPlaylistRepository } from '@/features/playlists/infrastructure/in-memory-playlist-repository';
+import type { PlaylistIdGenerator } from '@/features/playlists/application/ports/playlist-id-generator';
 
 describe('createPlaylist with an in-memory repository (integration)', () => {
   test('given an empty repository, when creating, then the playlist can be read', async () => {

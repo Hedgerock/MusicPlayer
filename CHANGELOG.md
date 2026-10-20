@@ -29,7 +29,9 @@ This document records notable completed changes to MusicPlayer.
 - Native database initialization on application startup, with shared connection loading and retry support.
 - Architecture decision defining UI state ownership and shared state management.
 - React presentation guidelines for components, hooks, memoization, and effects.
+- SQLite playlist repository with atomic writes, ordered track reads, and unit and integration tests.
 
 ### Changed
 
 - Migrated application startup component tests from React Test Renderer to React Native Testing Library.
+- Automated grouping of value imports before separate type imports.

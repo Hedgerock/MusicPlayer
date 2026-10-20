@@ -16,7 +16,10 @@ runner have automated SQLite integration tests.
 Application startup initializes the working SQLite database before showing application content. Failed initialization can
 be retried from the startup screen.
 
-Implementing the SQLite playlist repository is the next step.
+The SQLite playlist repository supports atomic playlist writes and ordered track reads, with unit and SQLite integration
+tests.
+
+Connecting the repository to application composition and the playlist interface is the next step.
 
 Music playback and the user-facing application screens remain planned.
 
