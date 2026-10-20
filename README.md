@@ -21,7 +21,9 @@ tests.
 
 A playlist composition factory prepares creation and read operations from an initialized database and an injected ID generator.
 
-Connecting the factory to application startup and the playlist interface is the next step.
+The playlist creation form has component tests for pending saves, validation messages, retry, and successful creation.
+
+Connecting the factory and form to application startup and the playlist screen is the next step.
 
 Music playback and the user-facing application screens remain planned.
 

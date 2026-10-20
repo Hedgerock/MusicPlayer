@@ -31,6 +31,7 @@ This document records notable completed changes to MusicPlayer.
 - React presentation guidelines for components, hooks, memoization, and effects.
 - SQLite playlist repository with atomic writes, ordered track reads, and unit and integration tests.
 - Application composition for playlist creation and reads, with unit and SQLite integration tests.
+- Playlist creation form with labeled controls, submission feedback, retry support, and component tests.
 
 ### Changed
 
