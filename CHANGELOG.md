@@ -30,6 +30,7 @@ This document records notable completed changes to MusicPlayer.
 - Architecture decision defining UI state ownership and shared state management.
 - React presentation guidelines for components, hooks, memoization, and effects.
 - SQLite playlist repository with atomic writes, ordered track reads, and unit and integration tests.
+- Application composition for playlist creation and reads, with unit and SQLite integration tests.
 
 ### Changed
 

@@ -19,7 +19,9 @@ be retried from the startup screen.
 The SQLite playlist repository supports atomic playlist writes and ordered track reads, with unit and SQLite integration
 tests.
 
-Connecting the repository to application composition and the playlist interface is the next step.
+A playlist composition factory prepares creation and read operations from an initialized database and an injected ID generator.
+
+Connecting the factory to application startup and the playlist interface is the next step.
 
 Music playback and the user-facing application screens remain planned.
 
