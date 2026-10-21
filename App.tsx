@@ -4,52 +4,63 @@
  *
  * @format
  */
-
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  Animated,
   Pressable,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
-  View,
 } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+import { createPlaylistServices } from '@/app/playlists/create-playlist-services';
 import { getAppDatabase } from '@/app/storage/get-app-database';
-import { checkSqliteStorage } from '@/features/playlists/infrastructure/check-sqlite-storage';
+import { createRandomPlaylistIdGenerator } from '@/features/playlists/infrastructure/random-playlist-id-generator';
+import { PlaylistsScreen } from '@/features/playlists/presentation/screens/playlists-screen/playlists-screen';
 
-import ScrollView = Animated.ScrollView;
+type AppInitializationState =
+  | { status: 'loading' }
+  | { status: 'error' }
+  | { status: 'ready'; services: ReturnType<typeof createPlaylistServices> };
+
+type AppStartupProps = {
+  status: 'loading' | 'error';
+  onRetry: () => void;
+};
+
+const playlistIdGenerator = createRandomPlaylistIdGenerator(bytes => {
+  globalThis.crypto.getRandomValues(bytes);
+});
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(
-    'loading',
-  );
-
+  const [state, setState] = useState<AppInitializationState>({
+    status: 'loading',
+  });
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     let active = true;
 
-    getAppDatabase().then(
-      () => {
-        if (active) {
-          setStatus('ready');
+    async function initialize() {
+      try {
+        const database = await getAppDatabase();
+
+        if (!active) {
+          return;
         }
-      },
-      () => {
+
+        const services = createPlaylistServices(database, playlistIdGenerator);
+
+        setState({ status: 'ready', services });
+      } catch {
         if (active) {
-          setStatus('error');
+          setState({ status: 'error' });
         }
-      },
-    );
+      }
+    }
+
+    void initialize();
 
     return () => {
       active = false;
@@ -57,141 +68,36 @@ function App() {
   }, [attempt]);
 
   function retryInitialization() {
-    setStatus('loading');
-    setAttempt(value => value + 1);
+    setState({ status: 'loading' });
+    setAttempt(curAttempt => curAttempt + 1);
   }
 
   return (
     <SafeAreaProvider>
-      <StatusBar
-        barStyle={
-          __DEV__ || status !== 'ready' || !isDarkMode
-            ? 'dark-content'
-            : 'light-content'
-        }
-      />
-      {status === 'ready' ? (
-        <AppContent />
+      <StatusBar barStyle="dark-content" />
+
+      {state.status === 'ready' ? (
+        <PlaylistsScreen {...state.services} />
       ) : (
-        <AppStartup status={status} onRetry={retryInitialization} />
+        <AppStartup status={state.status} onRetry={retryInitialization} />
       )}
     </SafeAreaProvider>
   );
 }
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-  const inProgress = useRef(false);
-
-  const [isChecking, setIsChecking] = useState(false);
-  const [message, setMessage] = useState('Click button for checking database');
-
-  async function handleStorageCheck() {
-    if (inProgress.current) {
-      return;
-    }
-
-    inProgress.current = true;
-
-    setIsChecking(true);
-    setMessage('Check is updating');
-
-    try {
-      const count = await checkSqliteStorage();
-
-      setMessage(`Checking completed: Counter ${count}.`);
-    } catch (error) {
-      const details = error instanceof Error ? error.message : String(error);
-
-      setMessage(`Error checked: ${details}`);
-    } finally {
-      inProgress.current = false;
-      setIsChecking(false);
-    }
-  }
-
-  if (__DEV__) {
-    return (
-      <View
-        style={[
-          styles.container,
-          styles.diagnosticScreen,
-          {
-            paddingTop: safeAreaInsets.top,
-            paddingBottom: safeAreaInsets.bottom,
-          },
-        ]}
-      >
-        <ScrollView contentContainerStyle={styles.diagnosticContent}>
-          <Text accessibilityRole="header" style={styles.diagnosticTitle}>
-            Проверка хранилища
-          </Text>
-
-          <Text accessibilityLiveRegion="polite" style={styles.diagnosticText}>
-            {message}
-          </Text>
-
-          <Pressable
-            accessibilityRole="button"
-            accessibilityState={{
-              disabled: isChecking,
-              busy: isChecking,
-            }}
-            disabled={isChecking}
-            onPress={handleStorageCheck}
-            style={[
-              styles.diagnosticButton,
-              isChecking && styles.diagnosticButtonDisabled,
-            ]}
-          >
-            <Text style={styles.diagnosticButtonText}>
-              {isChecking ? 'Проверяем...' : 'Проверить хранилище'}
-            </Text>
-          </Pressable>
-        </ScrollView>
-      </View>
-    );
-  }
-
+function AppStartup({ status, onRetry }: AppStartupProps) {
   return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-function AppStartup({
-  status,
-  onRetry,
-}: {
-  status: 'loading' | 'error';
-  onRetry: () => void;
-}) {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View
-      style={[
-        styles.container,
-        styles.diagnosticScreen,
-        {
-          paddingTop: safeAreaInsets.top,
-          paddingBottom: safeAreaInsets.bottom,
-        },
-      ]}
-    >
-      <ScrollView contentContainerStyle={styles.diagnosticContent}>
-        <Text accessibilityRole="header" style={styles.diagnosticTitle}>
+    <SafeAreaView style={styles.screen}>
+      <ScrollView contentContainerStyle={styles.content}>
+        <Text accessibilityRole="header" style={styles.title}>
           Запуск приложения
         </Text>
 
         <Text
+          accessibilityRole={status === 'error' ? 'alert' : undefined}
           accessibilityLiveRegion="polite"
           accessibilityState={{ busy: status === 'loading' }}
-          style={styles.diagnosticText}
+          style={[styles.message, status === 'error' && styles.error]}
         >
           {status === 'loading'
             ? 'Готовим приложение...'
@@ -202,37 +108,38 @@ function AppStartup({
           <Pressable
             accessibilityRole="button"
             onPress={onRetry}
-            style={styles.diagnosticButton}
+            style={styles.button}
           >
-            <Text style={styles.diagnosticButtonText}>Повторить</Text>
+            <Text style={styles.buttonText}>Повторить</Text>
           </Pressable>
         )}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-  },
-  diagnosticScreen: {
     backgroundColor: '#ffffff',
   },
-  diagnosticContent: {
+  content: {
     padding: 24,
     gap: 16,
   },
-  diagnosticTitle: {
+  title: {
     fontSize: 24,
     fontWeight: '600',
     color: '#111111',
   },
-  diagnosticText: {
+  message: {
     fontSize: 18,
     color: '#111111',
   },
-  diagnosticButton: {
+  error: {
+    color: '#a11d1d',
+  },
+  button: {
     minHeight: 48,
     padding: 12,
     borderRadius: 8,
@@ -240,13 +147,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  diagnosticButtonText: {
+  buttonText: {
     fontSize: 18,
     color: '#ffffff',
     textAlign: 'center',
-  },
-  diagnosticButtonDisabled: {
-    opacity: 0.6,
   },
 });
 

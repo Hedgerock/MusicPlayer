@@ -26,7 +26,10 @@ The playlist creation form has component tests for pending saves, validation mes
 The playlist screen combines loading, empty, and retry states with the creation form. Component tests cover screen behavior,
 including an integration scenario using the creation use case and in-memory repository.
 
-Connecting the playlist services and screen to native application startup is the next step.
+The playlist screen is connected to the working SQLite database on application startup.
+
+Startup component tests and a SQLite-backed application integration test cover the wiring. Native Android verification
+follows the [playlist verification procedure](docs/testing/playlists-android-check.md).
 
 Music playback remains planned.
 

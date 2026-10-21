@@ -33,6 +33,9 @@ This document records notable completed changes to MusicPlayer.
 - Application composition for playlist creation and reads, with unit and SQLite integration tests.
 - Playlist creation form with labeled controls, submission feedback, retry support, and component tests.
 - Playlist screen with loading, empty, and retry states, integrated creation form, and component tests.
+- Native random byte source and an injectable playlist ID generator with unit tests.
+- SQLite-backed application integration test covering playlist creation and reads after remounting.
+- Android persistence and accessibility verification procedure.
 
 ### Changed
 
@@ -40,3 +43,9 @@ This document records notable completed changes to MusicPlayer.
 - Automated grouping of value imports before separate type imports.
 - Expanded React presentation and contributing guidelines with styling and screenshot testing rules.
 - Extracted reusable helpers for controlled promises and SQLite playlist integration tests.
+- Connected the playlist screen to the working SQLite database on application startup.
+- Updated startup component tests for playlist service composition and retry.
+
+### Removed
+
+- React Native template screen dependency and the initial SQLite diagnostic counter.
