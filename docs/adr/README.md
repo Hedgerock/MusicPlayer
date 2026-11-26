@@ -8,3 +8,4 @@
 | [ADR-0002](0002-local-storage.md)           | Постоянное хранение данных в SQLite  | Принято |
 | [ADR-0003](0003-playlist-storage-schema.md) | Схема хранения плейлистов и миграции | Принято |
 | [ADR-0004](0004-ui-state-management.md)     | Управление состоянием интерфейса     | Принято |
+| [ADR-0005](0005-android-audio-library.md)   | Доступ к локальной аудиотеке Android | Принято |

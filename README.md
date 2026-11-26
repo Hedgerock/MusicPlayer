@@ -31,6 +31,10 @@ The playlist screen is connected to the working SQLite database on application s
 Startup component tests and a SQLite-backed application integration test cover the wiring. Native Android verification
 follows the [playlist verification procedure](docs/testing/playlists-android-check.md).
 
+Local audio discovery is planned. Its requirements and Android integration approach are documented in the
+[feature specification](docs/features/read-local-audio.md) and
+[architecture decision](docs/adr/0005-android-audio-library.md).
+
 Music playback remains planned.
 
 ## Planned features

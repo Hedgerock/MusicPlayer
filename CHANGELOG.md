@@ -36,6 +36,7 @@ This document records notable completed changes to MusicPlayer.
 - Native random byte source and an injectable playlist ID generator with unit tests.
 - SQLite-backed application integration test covering playlist creation and reads after remounting.
 - Android persistence and accessibility verification procedure.
+- Local audio discovery specification and architecture decision for Android MediaStore integration.
 
 ### Changed
 
